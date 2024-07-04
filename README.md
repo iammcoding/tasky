@@ -14,7 +14,7 @@ This project is a task management application built with Django for the backend 
 1. **Clone the repository**
    ```bash
    git clone https://github.com/iammcoding/tasky
-   cd taskmanager
+   cd tasky
 2. **Setup Django**
    ```bash
     python -m venv env
