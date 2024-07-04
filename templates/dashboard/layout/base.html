@@ -1,0 +1,40 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tasky Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <style>
+    .flex-nowrap {
+      flex-wrap: nowrap !important;
+    }
+
+    /* Styles for the drag and drop div */
+    .dragDiv {
+      width: 100%;
+    }
+
+    /* Styles for the loader element */
+    #loader {
+      position: fixed;
+      bottom: 50px;
+      right: 50px;
+      z-index: 999999;
+      display: none;
+    }
+</style>
+
+  <body class="dark:bg-gray-800 bg-white">
+    {% include "dashboard/layout/header.html" %}
+ 
+        {% block content %}
+        {% endblock %}
+    
+
+    {% include "dashboard/layout/footer.html" %}
+
+ </body>
+</html>

@@ -1,0 +1,182 @@
+<!-- templates/dashboard/dash.html -->
+
+{% extends 'dashboard/layout/base.html' %} {% load static %} {% block content %}
+<div class="p-4 sm:ml-64">
+  <div class="p-4 mt-14">
+    <h4 class="ml-1 font-bold text-base sm:text-lg md:text-xl dark:text-white">
+      Filter By:
+    </h4>
+    <div class="flex flex-wrap justify-between mt-3">
+      <div class="flex">
+        <!-- Button to show filter modal -->
+        <button
+          type="button"
+          onclick="showModal('filter-modal')"
+          class="text-black dark:text-white border focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center inline-flex items-center me-2 dark:border-blue-600 dark:hover:bg-blue-700 dark:hover:text-white dark:focus:ring-blue-800"
+        >
+          <svg
+            class="w-5 h-5 me-2"
+            xmlns="http://www.w3.org/2000/svg"
+            width="1em"
+            height="1em"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill="currentColor"
+              d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"
+            />
+          </svg>
+          Filters
+        </button>
+      </div>
+      <div>
+        <!-- Button to show add task modal -->
+        <button
+          type="button"
+          onclick="showModal('add-task-modal')"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:mt-0"
+        >
+          New Task
+          <svg
+            class="rtl:rotate-180 w-5 h-5 ms-2"
+            xmlns="http://www.w3.org/2000/svg"
+            width="1em"
+            height="1em"
+            viewBox="0 0 32 32"
+          >
+            <path
+              fill="currentColor"
+              d="M25 4.03c-.765 0-1.517.3-2.094.876L13 14.78l-.22.22l-.06.313l-.69 3.5l-.31 1.468l1.467-.31l3.5-.69l.313-.06l.22-.22l9.874-9.906A2.968 2.968 0 0 0 25 4.032zm0 1.94c.235 0 .464.12.688.343c.446.446.446.928 0 1.375L16 17.374l-1.72.344l.345-1.72l9.688-9.688c.223-.223.452-.343.687-.343zM4 8v20h20V14.812l-2 2V26H6V10h9.188l2-2z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="p-3 sm:ml-64">
+  <div class="p-4 mt-14">
+    <div
+      class="flex gap-3 justify-between md:flex-nowrap min-[320px]:flex-wrap"
+    >
+      <!-- Task status sections -->
+      <div class="flex flex-col w-96 md:w-full sm:w-full">
+        <div
+          class="py-2 border border-1 px-5 rounded-md shadow flex justify-between"
+        >
+          <span class="dark:text-white"
+            >In Progress (<span id="inprogress_count"></span>)</span
+          >
+          <i class="dark:text-white">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="2em"
+              height="1.5em"
+              viewBox="0 0 24 24"
+            >
+              <g
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                color="currentColor"
+              >
+                <path
+                  d="m12.88 7.017l4.774 1.271m-5.796 2.525l2.386.636m-2.267 6.517l.954.255c2.7.72 4.05 1.079 5.114.468c1.063-.61 1.425-1.953 2.148-4.637l1.023-3.797c.724-2.685 1.085-4.027.471-5.085s-1.963-1.417-4.664-2.136l-.954-.255c-2.7-.72-4.05-1.079-5.113-.468c-1.064.61-1.426 1.953-2.15 4.637l-1.022 3.797c-.724 2.685-1.086 4.027-.471 5.085c.614 1.057 1.964 1.417 4.664 2.136"
+                />
+                <path
+                  d="M12 20.946l-.952.26c-2.694.733-4.04 1.1-5.102.477c-1.06-.622-1.422-1.99-2.143-4.728l-1.021-3.872c-.722-2.737-1.083-4.106-.47-5.184C2.842 6.966 4 7 5.5 7"
+                />
+              </g>
+            </svg>
+          </i>
+        </div>
+        <div
+          data-drop-status="In Progress"
+          class="dropDiv w-full h-52 max-w-sm mt-4 mx-auto hidden rounded-xl border border-dashed shadow-md overflow-hidden md:max-w-2xl"
+        ></div>
+        <div id="inprogress"></div>
+      </div>
+      <div class="flex flex-col w-96 md:w-full sm:w-full">
+        <div
+          class="py-2 border border-1 px-5 rounded-md shadow flex justify-between"
+        >
+          <span class="dark:text-white"
+            >Completed (<span id="completed_count"></span>)</span
+          >
+          <i class="dark:text-white">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="2em"
+              height="1.5em"
+              viewBox="0 0 24 24"
+            >
+              <g
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                color="currentColor"
+              >
+                <path
+                  d="M17 2v2m-5-2v2M7 2v2m-3.5 6c0-3.3 0-4.95 1.025-5.975S7.2 3 10.5 3h3c3.3 0 4.95 0 5.975 1.025S20.5 6.7 20.5 10v5c0 3.3 0 4.95-1.025 5.975S16.8 22 13.5 22h-3c-3.3 0-4.95 0-5.975-1.025S3.5 18.3 3.5 15zm10 6H17m-3.5-7H17"
+                />
+                <path
+                  d="M7 10s.5 0 1 1c0 0 1.588-2.5 3-3m-4 9s.5 0 1 1c0 0 1.588-2.5 3-3"
+                />
+              </g>
+            </svg>
+          </i>
+        </div>
+        <div
+          data-drop-status="Completed"
+          class="dropDiv w-full h-52 max-w-sm mt-4 mx-auto hidden rounded-xl border border-dashed shadow-md overflow-hidden md:max-w-2xl"
+        ></div>
+        <div id="completed"></div>
+      </div>
+      <div class="flex flex-col w-96 md:w-full sm:w-full">
+        <div
+          class="py-2 border border-1 px-5 rounded-md shadow flex justify-between"
+        >
+          <span class="dark:text-white"
+            >Overdue (<span id="overdue_count"></span>)</span
+          >
+          <i class="dark:text-white">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="2em"
+              height="1.5em"
+              viewBox="0 0 24 24"
+            >
+              <g fill="none" stroke="currentColor">
+                <circle cx="12" cy="12" r="8.5" />
+                <path
+                  stroke-linecap="round"
+                  d="M5 2.804A6 6 0 0 0 2.804 5M19 2.804A6 6 0 0 1 21.196 5M12 6.5v5.25c0 .138.112.25.25.25h4.25"
+                />
+              </g>
+            </svg>
+          </i>
+        </div>
+        <div
+          data-drop-status="Overdue"
+          class="dropDiv w-full h-52 max-w-sm mt-4 mx-auto hidden rounded-xl border border-dashed shadow-md overflow-hidden md:max-w-2xl"
+        ></div>
+        <div id="overdue"></div>
+      </div>
+    </div>
+
+    <!-- Placeholder for empty data -->
+    <div
+      style="display: none"
+      id="emptydata"
+      class="mt-[70px] items-center justify-center dark:text-white flex-col"
+    >
+      <img src="{% static 'emptydata.svg' %}" width="200" />
+      <h1 class="mt-4">No Task Added</h1>
+    </div>
+  </div>
+</div>
+{% endblock %}
