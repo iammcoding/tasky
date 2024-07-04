@@ -20,17 +20,20 @@ This project is a task management application built with Django for the backend 
     python -m venv env
     source env/bin/activate   
     # On Windows use `env\Scripts\activate`
-3. **Run migrations**
+3. **Install Django (Optional)**
+   ```bash
+    pip install django
+4. **Run migrations**
    ```bash
     python manage.py migrate
-4. **Create a superuser**
+5. **Create a superuser**
    ```bash
     python manage.py createsuperuser
 
-5. **Start the development server**
+6. **Start the development server**
    ```bash
     python manage.py runserver
-6. **Run unit tests**
+7. **Run unit tests**
    ```bash
     python manage.py test
 
